@@ -3,14 +3,14 @@ import CardComponent from '@/components/PrimeiraPagina/CardComponent.vue';
 import { appStore } from '@/stores/appStore'
 
 export default {
-    data(){
-        return{
-            inputText : null ,
+    data() {
+        return {
+            inputText: null,
             //Define-se o appStore nos imports com os { } pois foi exportado como variável e não export default.
-            appStore : appStore() , 
+            appStore: appStore(),
         }
     },
-    components:{
+    components: {
         CardComponent
     }
 }
@@ -22,11 +22,16 @@ export default {
     <h1>PrimeiraPagina</h1>
 
     <h2>{{ appStore.getParametroArmazenado }}</h2>
+
+    <ul>
+        <li v-if="Object.keys(appStore.getDadosCep).length !== 0" v-for="item in Object.keys(appStore.getDadosCep)">{{
+            appStore.getDadosCep[item] }}</li>
+    </ul>
 </template>
 <style>
-.redBar{
+.redBar {
     color: #ffffff;
-    background-color: red; 
+    background-color: red;
     font-size: 2rem;
 }
 </style>
