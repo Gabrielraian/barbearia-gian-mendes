@@ -7,7 +7,8 @@ export const appStore = defineStore('app' , {
     state: () => {
         return {
             parametroArmazenado: "", 
-            dadosCep : {}
+            dadosCep: {},
+            showModal:false,
         }
     },
     getters:{
@@ -18,6 +19,10 @@ export const appStore = defineStore('app' , {
         getDadosCep(state)
         {
             return state.dadosCep;
+        },
+        getShowModal(state)
+        {
+            return state.showModal;
         }
     },
     actions:{
@@ -30,7 +35,12 @@ export const appStore = defineStore('app' , {
             
             axios.get(`https://viacep.com.br/ws/${cep}/json/`).then(res => { this.dadosCep = res.data; console.log(res);});
 
+        },
+        setShowModal()
+        {
+            this.showModal = !this.showModal
         }
+
         
     }
 

@@ -1,0 +1,40 @@
+.modal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  background-color: #66666680; //primeiros 6 digitos =Cor , sétimo e oitavo digito = opacidade
+  z-index: 100;
+  justify-content: center; //Centraliza o eixo X
+  align-items: center; // Cemtraliza o eixo Y
+}
+.container {
+  width: 30%;
+  height: 30%;
+  background-color: #ffffff;
+  opacity: 1 !important;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column; //Essa direção de flex indica que para cada novo item
+  //ele será alocado como uma nova linha
+  //flex-row indica que ele apenas irá alocar uma nova linha quando todo o espaço estiver preenchido
+  //column , cada novo item desta classe será alocado como coluna , podendo exceder a width máxima.
+  &--header {
+    display: flex;
+    flex: 0 0 auto; //primeiros dois digitos indicam que tanto o eixo x quanto y podem ser modificados conforme o tamanho da tela
+    //0:não , 1:sim , auto indica que o tamanho desta classe é auto justificavel.
+    justify-content: flex-end;
+  }
+  &--body {
+    display: flex;
+    flex: 1 1 auto;
+  }
+  &--footer {
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: space-between;
+    gap: 4rem;
+  }
+}
