@@ -4,8 +4,10 @@ import { appStore } from './stores/appStore';
 
 //Duas importações necessárias para o vuelidator
 import { useVuelidate } from '@vuelidate/core'
-import { required, email, numeric, minLength } from '@vuelidate/validators';//Para cada tipo de campo deve-se adicionar o tipo de import que será utilizado 
+import { required, email, numeric, minLength } from '@vuelidate/validators';//Para cada tipo de campo deve-se adicionar o tipo de import que será utilizado
 
+//Template modal
+import TemplateModal from '@/components/Utils/TemplateModal/TemplateModal.vue';
 export default {
   setup() {
     return { v$: useVuelidate() }
@@ -36,10 +38,10 @@ export default {
       },
       inputCep: { numeric, required, minLength: minLength(8) }
     }
-  }
+  },
+
 }
 </script>
-
 <template>
   <header>
     <div>
