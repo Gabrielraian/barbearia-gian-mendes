@@ -10,6 +10,7 @@ class Company extends Model
 {
     use HasFactory;
     protected $table = 'company';
+    protected $fillable = ['created_at', 'updated_at', 'name', 'cnpj'];
 
     public function business_hours(): BelongsTo
     {

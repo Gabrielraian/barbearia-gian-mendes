@@ -11,6 +11,7 @@ class User extends Model
 {
     use HasFactory;
     protected $table = 'user';
+    protected $fillable = ['created_at', 'updated_at', 'name', 'cellphone', 'email', 'password', 'role_id', 'company_id'];
 
     public function schedule_employees(): BelongsTo
     {
@@ -30,5 +31,9 @@ class User extends Model
     public function roles(): HasMany
     {
         return $this->hasMany(Role::class, 'role_id');
+    }
+    public function getUsers()
+    {
+        return User::all();
     }
 }
