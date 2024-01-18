@@ -10,6 +10,7 @@ class Schedule extends Model
 {
     use HasFactory;
     protected $table = 'schedule';
+    protected $fillable = ['created_at', 'updated_at', 'datetime', 'employee_id', 'service_id', 'consumer_id'];
 
     public function employees(): HasMany
     {

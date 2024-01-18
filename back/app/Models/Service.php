@@ -10,6 +10,7 @@ class Service extends Model
 {
     use HasFactory;
     protected $table = 'service';
+    protected $fillable = ['name', 'description', 'created_at', 'updated_at'];
 
     public function schedule_services(): BelongsTo
     {

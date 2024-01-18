@@ -10,7 +10,7 @@ class BusinessHours extends Model
 {
     use HasFactory;
     protected $table = 'business_hours';
-
+    protected $fillable = ['company_id', 'week_day', 'start', 'end', 'created_at', 'updated_at'];
     public function companies(): HasMany
     {
         return $this->hasMany(Company::class, 'company_id');
