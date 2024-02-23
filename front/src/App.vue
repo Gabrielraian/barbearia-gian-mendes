@@ -22,11 +22,8 @@ export default {
   data() {
     return {
       appStore: appStore(),
-      dataSource: {
-        inputText: '',
-        inputEmail: ''
-      },
-      inputCep: ''
+      inputCep: '',
+      endereco: null
     }
   },
   methods: {
@@ -37,13 +34,26 @@ export default {
       this.appStore.getCep(this.inputCep);
     },
     sendRequest() {
+      //É possível agora enviar requests a API através do vuex 
+      //Deve-se definir o requestModel com o body , URL e method
       let requestModel = {} as RequestModel;
       requestModel.body = null;
       requestModel.method = 'GET';
       requestModel.url = 'http://localhost:3000/';
+      //Request com vuex
       this.$store.dispatch('request', requestModel);
 
     },
+    async sendRequestCeps() {
+      let requestModel = {} as RequestModel;
+      requestModel.body = null;
+      requestModel.method = 'GET';
+      requestModel.url = `https://viacep.com.br/ws/${this.inputCep}/json/`;
+      //Request com vuex
+      this.endereco = await this.$store.dispatch('request', requestModel);
+
+    },
+
     validations() {
       return {
         dataSource: {
@@ -62,7 +72,16 @@ export default {
 </script>
 <template>
   <Toast />
+  <h4 class="error">Testar request error</h4>
   <button @click="sendRequest">Fazer request com Toast e Vuex</button>
+  <br>
+  <h4 class="error">Testar cep</h4>
+  <label>Cep request</label>
+  <input type="text" v-model="inputCep" />
+  <button @click="sendRequestCeps">Pesquisar cep</button>
+  <br>
+  <h4>Url enviada : https://viacep.com.br/ws/{{ this.inputCep }}/json/</h4>
+  {{ this.endereco }}
   <header>
     <div>
       <nav>
@@ -95,4 +114,4 @@ export default {
 .success {
   Border-color: green;
 }
-</style>
+</style>./pinia/appStore

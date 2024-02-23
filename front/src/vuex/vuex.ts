@@ -13,48 +13,43 @@ const state :State={
     config: appSettings, 
     useToast: null , 
 };
-
+//As mutations são normalmente utilizados para modificar os dados do vuex e não retornam dados
 const mutations = {
- 
-    openMenu(state:State)
-    {
-        state.navMenu = true; 
-    },
-    closeMenu(state:State)
-    {
-        state.navMenu = false; 
-    },
+//Utilizar esta mutation para configurar a sessão do usuário no frontend
     setLogin(state: State, login: any)
     {   
         state.requestController.setToken(login);
         state.login = login;
     },
+    //Este metodo é utilizado para fazer o setup do Toast apenas uma vêz quando o App.vue é inicializado
     setToast(state: State, useToast: any)
     {
         state.requestController = new RequestController(useToast);
         state.useToast = useToast;
     },
+    //Este metodo é utilizado caso seja necessário fazer um toast com o vuex.
     addToast(state: State , toast:ToastMessage )
     {
         state.useToast.add({ severity: toast.severity , summary: toast.summary, detail: toast.detail , life: toast.life })
     },
 };
-
+//O getters é utilizado para receber um parametro,não é possível modificar dados aqui.
 const getters = {
-    getNavMenu(state:State) : boolean
-    {
-        return state.navMenu ; 
-    },
+    //Retorna os dados definidos no login
     getLogin(state: State)
     {
         return state.login;
     },
+    //Retorna as configurações da aplicação.
     getConfig(state:State)
     {
         return state.config;
     },
 }
+//Actions são utilizadas para realizar ações e retornam dados como uma de Promise
 const actions = {
+    //Utiliza a classe RequestController para realizazr uma api request e retorna de forma sincrona
+    //seus dados.
     async request(context ,requestParams:RequestModel)
     {
         const httpMethod = requestParams.method.toLowerCase();
@@ -68,6 +63,7 @@ const actions = {
         }
     }
 }
+//retorna o vuex com todas as opções definidas acima para ser utilizada na main.ts
 export default createStore({
     state : state , 
     getters: getters, 

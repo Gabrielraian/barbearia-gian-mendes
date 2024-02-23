@@ -68,4 +68,4 @@ export default {
     background-color: red;
     font-size: 2rem;
 }
-</style>
+</style>@/pinia/appStore

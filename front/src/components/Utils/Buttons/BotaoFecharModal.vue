@@ -23,4 +23,4 @@ h1 {
     color: red;
     font-weight: bold;
 }
-</style>
+</style>@/pinia/appStore
