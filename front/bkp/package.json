@@ -1,17 +1,20 @@
 {
-  "name": "frontend-admin",
+  "name": "barbearia-gian-mendes",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
+    "test": "vitest",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@vuelidate/core": "^2.0.3",
-    "@vuelidate/validators": "^2.0.4",
+    "axios": "^1.6.7",
     "core-js": "^3.8.3",
+    "moment": "^2.30.1",
+    "pinia": "^2.1.7",
+    "primevue": "^3.48.1",
+    "vitest": "^1.3.1",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.3",

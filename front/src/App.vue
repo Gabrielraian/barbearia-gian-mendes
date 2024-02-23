@@ -8,6 +8,13 @@ import { required, email, numeric, minLength } from '@vuelidate/validators';//Pa
 
 //Template modal
 import TemplateModal from '@/components/Utils/TemplateModal/TemplateModal.vue';
+
+//Interface tipada para o Modelo de dados para utilizar para criar uma HttpRequest e Toast
+import { RequestModel } from '@/vuex/Entity/requestModel';
+import { ToastMessage } from '@/vuex/Entity/toastMessage';
+//Servico de Toast VuePrime
+import { useToast } from 'primevue/usetoast';
+
 export default {
   setup() {
     return { v$: useVuelidate() }
@@ -28,21 +35,33 @@ export default {
     },
     getCep() {
       this.appStore.getCep(this.inputCep);
-    }
-  },
-  validations() {
-    return {
-      dataSource: {
-        inputText: { required },
-        inputEmail: { email },
-      },
-      inputCep: { numeric, required, minLength: minLength(8) }
-    }
-  },
+    },
+    sendRequest() {
+      let requestModel = {} as RequestModel;
+      requestModel.body = null;
+      requestModel.method = 'GET';
+      requestModel.url = 'http://localhost:3000/';
+      this.$store.dispatch('request', requestModel);
 
+    },
+    validations() {
+      return {
+        dataSource: {
+          inputText: { required },
+          inputEmail: { email },
+        },
+        inputCep: { numeric, required, minLength: minLength(8) }
+      }
+    },
+
+  },
+  beforeCreate() {
+    this.$store.commit('setToast', useToast());
+  }
 }
 </script>
 <template>
+  <button @click="sendRequest">Fazer request com Toast e Vuex</button>
   <header>
     <div>
       <nav>
