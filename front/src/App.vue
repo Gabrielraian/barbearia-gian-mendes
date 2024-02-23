@@ -61,6 +61,7 @@ export default {
 }
 </script>
 <template>
+  <Toast />
   <button @click="sendRequest">Fazer request com Toast e Vuex</button>
   <header>
     <div>
@@ -78,20 +79,6 @@ export default {
   </div>
   <!-- é aplicado a validação de campo do inputEmail contido no dataSource para escolher a classe , pode-se aplicar multiplas classes separadas por virgula.
      O Estado deve ser true para aplicar-->
-
-  <label>Email <input type="email" v-model="dataSource.inputEmail"
-      :class="{ 'error': v$.dataSource.inputEmail.$invalid, 'success': !v$.dataSource.inputEmail.$invalid }" /></label>
-
-  <label>Texto <input type="text" v-model="dataSource.inputText"
-      :class="{ 'error': v$.dataSource.inputText.$invalid, 'success': !v$.dataSource.inputText.$invalid }" /></label>
-
-  <!--todos as propriedades do objeto dataSource devem ser válidos para habilitar o botão -->
-  <button @click="setParametroGlobal" :disabled="v$.dataSource.$invalid">SetarParametroGlobal</button>
-
-  <br><br><br>
-  <label>Consultar Cep :<input type="text" v-model="inputCep"
-      :class="{ 'error': v$.inputCep.$invalid, 'success': !v$.inputCep.$invalid }" /></label>
-  <button :disabled="v$.inputCep.$invalid" @click="getCep">Consultar Cep</button>
 </template>
 <style>
 .conteudo {

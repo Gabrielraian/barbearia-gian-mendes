@@ -36,9 +36,9 @@ export class RequestController {
         //O tipo de resposta 200 por padrão do axios é retornado como sucesso
         //Enquanto os outros tipos são retornados no catch como erro.
         //Severity types : info , success , warn , error 
-        let severity='';
-        let summary='';
-        let life=0; 
+        let severity: string;
+        let summary: string;
+        let life: number; 
         
         if (status >= 300 && status <= 399)
         {
