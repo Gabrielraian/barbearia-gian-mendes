@@ -8,6 +8,13 @@ import { required, email, numeric, minLength } from '@vuelidate/validators';//Pa
 
 //Template modal
 import TemplateModal from '@/components/Utils/TemplateModal/TemplateModal.vue';
+
+//Interface tipada para o Modelo de dados para utilizar para criar uma HttpRequest e Toast
+import { RequestModel } from '@/vuex/Entity/requestModel';
+import { ToastMessage } from '@/vuex/Entity/toastMessage';
+//Servico de Toast VuePrime
+import { useToast } from 'primevue/usetoast';
+
 export default {
   setup() {
     return { v$: useVuelidate() }
@@ -15,11 +22,8 @@ export default {
   data() {
     return {
       appStore: appStore(),
-      dataSource: {
-        inputText: '',
-        inputEmail: ''
-      },
-      inputCep: ''
+      inputCep: '',
+      endereco: null
     }
   },
   methods: {
@@ -28,21 +32,56 @@ export default {
     },
     getCep() {
       this.appStore.getCep(this.inputCep);
-    }
-  },
-  validations() {
-    return {
-      dataSource: {
-        inputText: { required },
-        inputEmail: { email },
-      },
-      inputCep: { numeric, required, minLength: minLength(8) }
-    }
-  },
+    },
+    sendRequest() {
+      //É possível agora enviar requests a API através do vuex 
+      //Deve-se definir o requestModel com o body , URL e method
+      let requestModel = {} as RequestModel;
+      requestModel.body = null;
+      requestModel.method = 'GET';
+      requestModel.url = 'http://localhost:3000/';
+      //Request com vuex
+      this.$store.dispatch('request', requestModel);
 
+    },
+    async sendRequestCeps() {
+      let requestModel = {} as RequestModel;
+      requestModel.body = null;
+      requestModel.method = 'GET';
+      requestModel.url = `https://viacep.com.br/ws/${this.inputCep}/json/`;
+      //Request com vuex
+      this.endereco = await this.$store.dispatch('request', requestModel);
+
+    },
+
+    validations() {
+      return {
+        dataSource: {
+          inputText: { required },
+          inputEmail: { email },
+        },
+        inputCep: { numeric, required, minLength: minLength(8) }
+      }
+    },
+
+  },
+  beforeCreate() {
+    this.$store.commit('setToast', useToast());
+  }
 }
 </script>
 <template>
+  <Toast />
+  <h4 class="error">Testar request error</h4>
+  <button @click="sendRequest">Fazer request com Toast e Vuex</button>
+  <br>
+  <h4 class="error">Testar cep</h4>
+  <label>Cep request</label>
+  <input type="text" v-model="inputCep" />
+  <button @click="sendRequestCeps">Pesquisar cep</button>
+  <br>
+  <h4>Url enviada : https://viacep.com.br/ws/{{ this.inputCep }}/json/</h4>
+  {{ this.endereco }}
   <header>
     <div>
       <nav>
@@ -59,20 +98,6 @@ export default {
   </div>
   <!-- é aplicado a validação de campo do inputEmail contido no dataSource para escolher a classe , pode-se aplicar multiplas classes separadas por virgula.
      O Estado deve ser true para aplicar-->
-
-  <label>Email <input type="email" v-model="dataSource.inputEmail"
-      :class="{ 'error': v$.dataSource.inputEmail.$invalid, 'success': !v$.dataSource.inputEmail.$invalid }" /></label>
-
-  <label>Texto <input type="text" v-model="dataSource.inputText"
-      :class="{ 'error': v$.dataSource.inputText.$invalid, 'success': !v$.dataSource.inputText.$invalid }" /></label>
-
-  <!--todos as propriedades do objeto dataSource devem ser válidos para habilitar o botão -->
-  <button @click="setParametroGlobal" :disabled="v$.dataSource.$invalid">SetarParametroGlobal</button>
-
-  <br><br><br>
-  <label>Consultar Cep :<input type="text" v-model="inputCep"
-      :class="{ 'error': v$.inputCep.$invalid, 'success': !v$.inputCep.$invalid }" /></label>
-  <button :disabled="v$.inputCep.$invalid" @click="getCep">Consultar Cep</button>
 </template>
 <style>
 .conteudo {
@@ -89,4 +114,4 @@ export default {
 .success {
   Border-color: green;
 }
-</style>
+</style>./pinia/appStore

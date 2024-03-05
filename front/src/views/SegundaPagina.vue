@@ -17,4 +17,4 @@ export default {
             appStore.getDadosCep[item] }}</li>
     </ul>
 </template>
-<style></style>
+<style></style>@/pinia/appStore
